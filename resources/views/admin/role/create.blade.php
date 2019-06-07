@@ -3,18 +3,6 @@
 @section('main-content')
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
-	  <!-- Content Header (Page header) -->
-	  <section class="content-header">
-	    <h1>
-	      Text Editors
-	      <small>Advanced form element</small>
-	    </h1>
-	    <ol class="breadcrumb">
-	      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-	      <li><a href="#">Forms</a></li>
-	      <li class="active">Editors</li>
-	    </ol>
-	  </section>
 
 	  <!-- Main content -->
 	  <section class="content">
@@ -44,7 +32,7 @@
 	              	@foreach ($permissions as $permission)
 	              		@if ($permission->for == 'post')
 			              	<div class="checkbox">
-			              		<label><input type="checkbox" name="permission[]" value="{{ $permission->id }}">{{ $permission->name }}</label>
+			              		<label><input type="checkbox" name="permission[]" value="{{ $permission->id }}">{{ $permission->display_permission }}</label>
 			              	</div>
 	              		@endif
 	              	@endforeach
@@ -54,18 +42,18 @@
   	              	@foreach ($permissions as $permission)
   	              		@if ($permission->for == 'user')
   			              	<div class="checkbox">
-  			              		<label><input type="checkbox" name="permission[]" value="{{ $permission->id }}">{{ $permission->name }}</label>
+  			              		<label><input type="checkbox" name="permission[]" value="{{ $permission->id }}">{{ $permission->display_permission }}</label>
   			              	</div>
   	              		@endif
   	              	@endforeach
 	              </div>
 
 	              <div class="col-lg-4">
-	              	<label for="name">User Permissions</label>
+	              	<label for="name">Other</label>
   	              	@foreach ($permissions as $permission)
   	              		@if ($permission->for == 'other')
   			              	<div class="checkbox">
-  			              		<label><input type="checkbox" name="permission[]" value="{{ $permission->id }}">{{ $permission->name }}</label>
+  			              		<label><input type="checkbox" name="permission[]" value="{{ $permission->id }}">{{ $permission->display_permission }}</label>
   			              	</div>
   	              		@endif
   	              	@endforeach

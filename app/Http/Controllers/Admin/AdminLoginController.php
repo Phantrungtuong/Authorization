@@ -44,7 +44,7 @@ class AdminLoginController extends Controller
             $email = $req->input('email');
             $password = $req->input('password');
             if (Auth::guard('admin')->attempt(['email' => $email, 'password' => $password], $req->get('remember'))) {
-                return redirect()->intended(route('admin.index'));
+                return redirect()->intended(route('dasboard.index'));
 
             } else {
                 $errors = new MessageBag(['errorlogin' => 'Email hoặc mật khẩu không đúng']);

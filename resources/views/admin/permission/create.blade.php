@@ -37,6 +37,10 @@
 	                <label for="name">Permission</label>
 	                <input type="text" class="form-control" id="name" name="name" placeholder="Permission">
 	              </div>
+				<div class="form-group">
+					<label for="name">Display Permission</label>
+					<input type="text" class="form-control" id="name" name="display" placeholder="Permission">
+				</div>
 
 	              <div class="form-group">
 	              	<label for="for">Permission for</label>

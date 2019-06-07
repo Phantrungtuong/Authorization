@@ -6,18 +6,6 @@
 @section('main-content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>
-      Blank page
-      <small>it all starts here</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="#">Examples</a></li>
-      <li class="active">Blank page</li>
-    </ol>
-  </section>
 
   <!-- Main content -->
   <section class="content">
@@ -45,7 +33,8 @@
                         <thead>
                         <tr>
                           <th>S.No</th>
-                          <th>Permission Name</th>
+                          <th>Permission</th>
+                          <th>Display Permission</th>
                           <th>Permission For</th>
                           <th>Edit</th>
                           <th>Delete</th>
@@ -55,7 +44,8 @@
                         @foreach ($permissions as $permission)
                           <tr>
                             <td>{{ $loop->index + 1 }}</td>
-                            <td>{{ $permission->name }}</td>
+                            <td>{{ $permission->permission }}</td>
+                            <td>{{ $permission->display_permission }}</td>
                             <td>{{ $permission->for }}</td>
                               <td><a href="{{ route('permission.edit',$permission->id) }}"><span class="glyphicon glyphicon-edit"></span></a></td>
                               <td>
@@ -77,15 +67,6 @@
                           </tr>
                         @endforeach
                         </tbody>
-                        <tfoot>
-                        <tr>
-                          <th>S.No</th>
-                          <th>permission Name</th>
-                          <th>permission For</th>
-                          <th>Edit</th>
-                          <th>Delete</th>
-                        </tr>
-                        </tfoot>
                       </table>
                     </div>
                     <!-- /.box-body -->

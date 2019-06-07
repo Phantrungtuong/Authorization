@@ -2,27 +2,29 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Post;
+use App\Admin;
+use App\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-class PostController extends Controller
-{
+
+class AdminAccController extends Controller
+{  /**
+ * Create a new controller instance.
+ *
+ * @return void
+ */
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
-
     public function index()
     {
-        $posts = Post::all();
-        return view('admin.post.show',compact('posts'));
+        $users = Admin::all();
+        return view('admin.user.show',compact('users'));
     }
 
     /**
@@ -32,10 +34,8 @@ class PostController extends Controller
      */
     public function create()
     {
-//        if (Auth::user()->can('posts.create')) {
-            return view('admin.post.post');
-//        }
-//        return redirect(route('admin.home'));
+        $roles = Role::all();
+        return view('admin.user.create',compact('roles'));
     }
 
     /**
@@ -47,16 +47,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'title'=>'required',
-            'body' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:admins',
+            'password' => 'required|string|min:6|confirmed',
         ]);
-        $post = new Post;
-        $post->title = $request->title;
-        $post->body = $request->body;
-        $post->admin_id = Auth::guard('admin')->user()->id;
-        $post->save();
-
-        return redirect(route('post.index'));
+        $request['password'] = bcrypt($request->password);
+        $user = Admin::create($request->all());
+        $user->roles()->sync($request->role); //sync(): dùng để khởi tạo quan hệ n-n, nó cho phép nhận một mảng giá trị
+        return redirect(route('admin.index'));
     }
 
     /**
@@ -78,11 +76,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-//        if (Auth::user()->can('posts.update')) {
-            $post = Post::where('id',$id)->first();
-            return view('admin.post.edit',compact('post'));
-//        }
-//        return redirect(route('admin.home'));
+        $user = Admin::find($id);
+        $roles = Role::all();
+        return view('admin.user.edit',compact('user','roles'));
     }
 
     /**
@@ -95,17 +91,12 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'title'=>'required',
-            'body' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
         ]);
-        $post = Post::find($id);
-        $post->title = $request->title;
-        $post->body = $request->body;
-        $post->admin_id = Auth::guard('admin')->user()->id;
-
-        $post->save();
-
-        return redirect(route('post.index'));
+        Admin::where('id',$id)->update($request->except('_token','_method','role'));
+        Admin::find($id)->roles()->sync($request->role);  //sync(): dùng để khởi tạo quan hệ n-n, nó cho phép nhận một mảng giá trị
+        return redirect(route('admin.index'));
     }
 
     /**
@@ -116,7 +107,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::where('id',$id)->delete();
+        Admin::where('id',$id)->delete();
         return redirect()->back();
     }
 }

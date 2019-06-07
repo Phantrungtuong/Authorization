@@ -7,18 +7,6 @@
 @section('main-content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>
-      Blank page
-      <small>it all starts here</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="#">Examples</a></li>
-      <li class="active">Blank page</li>
-    </ol>
-  </section>
 
   <!-- Main content -->
   <section class="content">
@@ -27,7 +15,7 @@
     <div class="box">
       <div class="box-header with-border">
         <h3 class="box-title">Title</h3>
-        @can('posts.create', Auth::user())
+        @can('posts.create', Auth::guard('admin')->user())
           <a class='col-lg-offset-5 btn btn-success' href="{{ route('post.create') }}">Add New</a>
         @endcan
         <div class="box-tools pull-right">
@@ -49,15 +37,14 @@
                         <tr>
                           <th>S.No</th>
                           <th>Title</th>
-                          <th>Sub Title</th>
-                          <th>Slug</th>
+                          <th>Body</th>
                           <th>Creatd At</th>
-                          @can('posts.update',Auth::user())
+{{--                          @can('posts.update',Auth::user())--}}
                           <th>Edit</th>
-                          @endcan
-                           @can('posts.delete', Auth::user())
+{{--                          @endcan--}}
+{{--                           @can('posts.delete', Auth::user())--}}
                           <th>Delete</th>
-                          @endcan
+{{--                          @endcan--}}
                         </tr>
                         </thead>
                         <tbody>
@@ -65,15 +52,14 @@
                           <tr>
                             <td>{{ $loop->index + 1 }}</td>
                             <td>{{ $post->title }}</td>
-                            <td>{{ $post->subtitle }}</td>
-                            <td>{{ $post->slug }}</td>
+                            <td>{!!  $post->body !!}</td>
                             <td>{{ $post->created_at }}</td>
 
-                            @can('posts.update',Auth::user())
+{{--                            @can('posts.update',Auth::user())--}}
                               <td><a href="{{ route('post.edit',$post->id) }}"><span class="glyphicon glyphicon-edit"></span></a></td>
-                            @endcan
+{{--                            @endcan--}}
 
-                            @can('posts.delete', Auth::user())
+{{--                            @can('posts.delete', Auth::user())--}}
                             <td>
                               <form id="delete-form-{{ $post->id }}" method="post" action="{{ route('post.destroy',$post->id) }}" style="display: none">
                                 {{ csrf_field() }}
@@ -89,25 +75,10 @@
                                     event.preventDefault();
                                   }" ><span class="glyphicon glyphicon-trash"></span></a>
                             </td>
-                          @endcan
+{{--                          @endcan--}}
                           </tr>
                         @endforeach
                         </tbody>
-                        <tfoot>
-                        <tr>
-                          <th>S.No</th>
-                          <th>Title</th>
-                          <th>Sub Title</th>
-                          <th>Slug</th>
-                          <th>Creatd At</th>
-                          @can('posts.update',Auth::user())
-                          <th>Edit</th>
-                          @endcan
-                           @can('posts.delete', Auth::user())
-                          <th>Delete</th>
-                          @endcan
-                        </tr>
-                        </tfoot>
                       </table>
                     </div>
                     <!-- /.box-body -->

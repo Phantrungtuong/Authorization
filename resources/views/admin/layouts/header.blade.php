@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="{{ route('admin.index') }}" class="logo">
+    <a href="{{ route('dasboard.index') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
@@ -23,7 +23,14 @@
 
                 <p>
                   {{ Auth::user()->name }} <br>
-                    Role: {{Auth::user()->job_title}}
+                    Role |
+                    @foreach ($roles as $role)
+                        @if(count($roles) == 1)
+                            {!! $role->name !!}
+                        @else
+                            {!! $role->name !!} :
+                        @endif
+                    @endforeach
                   <small>Member since {{ Auth::user()->created_at->toFormattedDateString() }}</small>
                 </p>
               </li>

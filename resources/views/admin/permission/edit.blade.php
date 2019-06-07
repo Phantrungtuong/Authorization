@@ -36,8 +36,22 @@
 	            <div class="col-lg-offset-3 col-lg-6">
 	              <div class="form-group">
 	                <label for="name">Permission</label>
-	                <input type="text" class="form-control" id="name" name="name" placeholder="Permission" value="{{ $permission->name }}">
+	                <input type="text" class="form-control" id="name" name="name" placeholder="" value="{{ $permission->permission }}">
 	              </div>
+					<div class="form-group">
+						<label for="name">Display Permission</label>
+						<input type="text" class="form-control" id="name" name="display" placeholder="Permission" value="{{ $permission->display_permission }}">
+					</div>
+
+					<div class="form-group">
+						<label for="for">Permission for</label>
+						<select name="for" id="for" class="form-control">
+							<option value="{{ $permission->for }}" selected disabled>{{ $permission->for }}</option>
+							<option value="user">User</option>
+							<option value="post">Post</option>
+							<option value="other">Other</option>
+						</select>
+					</div>
 
 	            <div class="form-group">
 	              <button type="submit" class="btn btn-primary">Submit</button>
