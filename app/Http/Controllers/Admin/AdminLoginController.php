@@ -12,7 +12,7 @@ class AdminLoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:admin');
+        $this->middleware('guest:admin')->except('logout');
     }
     protected function guard()
     {
@@ -45,11 +45,16 @@ class AdminLoginController extends Controller
             $password = $req->input('password');
             if (Auth::guard('admin')->attempt(['email' => $email, 'password' => $password], $req->get('remember'))) {
                 return redirect()->intended(route('admin.index'));
+
             } else {
                 $errors = new MessageBag(['errorlogin' => 'Email hoặc mật khẩu không đúng']);
                 return redirect()->back()->withInput()->withErrors($errors);
             }
         }
 
+    }
+    public function logout(){
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
     }
 }
