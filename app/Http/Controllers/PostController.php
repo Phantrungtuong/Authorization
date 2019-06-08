@@ -32,10 +32,10 @@ class PostController extends Controller
      */
     public function create()
     {
-//        if (Auth::user()->can('posts.create')) {
+        if (Auth::user()->can('posts.create')) {
             return view('admin.post.post');
-//        }
-//        return redirect(route('admin.home'));
+        }
+        return redirect(route('dasboard.index'));
     }
 
     /**
@@ -78,11 +78,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-//        if (Auth::user()->can('posts.update')) {
+        if (Auth::user()->can('posts.update')) {
             $post = Post::where('id',$id)->first();
             return view('admin.post.edit',compact('post'));
-//        }
-//        return redirect(route('admin.home'));
+        }
+        return redirect(route('dasboard.index'));
     }
 
     /**

@@ -28,10 +28,10 @@ Route::prefix('admintrator')->group(function (){
 
 });
 Route::prefix('slidebar')->group(function (){
-    Route::resource('admin/post','PostController');
-    Route::resource('admin/admin','AdminAccController');
-    Route::resource('admin/role','RoleController');
-    Route::resource('admin/permission','PermissionController');
+    Route::resource('admin/post','PostController')->middleware('can:posts.post');
+    Route::resource('admin/admin','AdminAccController')->middleware('can:posts.adminaccount');
+    Route::resource('admin/role','RoleController')->middleware('can:posts.role');
+    Route::resource('admin/permission','PermissionController')->middleware('can:posts.permission');
 
 });
 

@@ -17,9 +17,9 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function view(Admin $user, Post $post)
+    public function view(Admin $user)
     {
-        //
+        return $this->getPermission($user, 'view');
     }
 
     /**
@@ -30,14 +30,7 @@ class PostPolicy
      */
     public function create(Admin $user)
     {
-        foreach ($user->roles() as $role){
-            foreach ($role->permissions() as $permission){
-                if ($permission->id == 3){
-                    return true;
-                }
-            }
-        }
-        return false;
+        return $this->getPermission($user, 'create');
     }
 
     /**
@@ -47,9 +40,9 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function update(Admin $user, Post $post)
+    public function update(Admin $user)
     {
-        //
+        return $this->getPermission($user, 'update');
     }
 
     /**
@@ -59,8 +52,43 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function delete(Admin $user, Post $post)
+    public function delete(Admin $user)
     {
-        //
+        return $this->getPermission($user, 'delete');
+    }
+
+    public function category(Admin $user)
+    {
+        return $this->getPermission($user, 'category');
+    }
+
+    public function adminaccount(Admin $user)
+    {
+        return $this->getPermission($user, 'admin');
+    }
+
+    public function role(Admin $user)
+    {
+        return $this->getPermission($user, 'role');
+    }
+
+    public function permission(Admin $user)
+    {
+        return $this->getPermission($user, 'permission');
+    }
+
+    public function post(Admin $user)
+    {
+        return $this->getPermission($user, 'post');
+    }
+    protected function getPermission($user, $rp_id){
+        foreach ($user->roles as $role){
+            foreach ($role->permissions as $permission){
+                if ($permission->permission == $rp_id){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

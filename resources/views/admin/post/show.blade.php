@@ -25,6 +25,7 @@
             <i class="fa fa-times"></i></button>
         </div>
       </div>
+      @can('posts.view')
       <div class="box-body">
         <div class="box">
                     <div class="box-header">
@@ -39,15 +40,16 @@
                           <th>Title</th>
                           <th>Body</th>
                           <th>Creatd At</th>
-{{--                          @can('posts.update',Auth::user())--}}
+                          @can('posts.update',Auth::user())
                           <th>Edit</th>
-{{--                          @endcan--}}
-{{--                           @can('posts.delete', Auth::user())--}}
+                          @endcan
+                           @can('posts.delete', Auth::user())
                           <th>Delete</th>
-{{--                          @endcan--}}
+                          @endcan
                         </tr>
                         </thead>
                         <tbody>
+
                         @foreach ($posts as $post)
                           <tr>
                             <td>{{ $loop->index + 1 }}</td>
@@ -55,11 +57,11 @@
                             <td>{!!  $post->body !!}</td>
                             <td>{{ $post->created_at }}</td>
 
-{{--                            @can('posts.update',Auth::user())--}}
+                            @can('posts.update',Auth::user())
                               <td><a href="{{ route('post.edit',$post->id) }}"><span class="glyphicon glyphicon-edit"></span></a></td>
-{{--                            @endcan--}}
+                            @endcan
 
-{{--                            @can('posts.delete', Auth::user())--}}
+                            @can('posts.delete', Auth::user())
                             <td>
                               <form id="delete-form-{{ $post->id }}" method="post" action="{{ route('post.destroy',$post->id) }}" style="display: none">
                                 {{ csrf_field() }}
@@ -75,19 +77,19 @@
                                     event.preventDefault();
                                   }" ><span class="glyphicon glyphicon-trash"></span></a>
                             </td>
-{{--                          @endcan--}}
+                          @endcan
                           </tr>
+
                         @endforeach
+
                         </tbody>
                       </table>
                     </div>
                     <!-- /.box-body -->
                   </div>
       </div>
+      @endcan
       <!-- /.box-body -->
-      <div class="box-footer">
-        Footer
-      </div>
       <!-- /.box-footer-->
     </div>
     <!-- /.box -->

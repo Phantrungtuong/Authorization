@@ -16,13 +16,21 @@
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class="active treeview">
+          @can('posts.post',Auth::guard('admin')->user())
             <li class=""><a href="{{ route('post.index') }}"><i class="fa fa-circle-o"></i> Posts</a></li>
-{{--            @can('posts.category',Auth::user())--}}
+          @endcan
+            @can('posts.category',Auth::guard('admin')->user())
             <li class=""><a href=""><i class="fa fa-circle-o"></i> Categories</a></li>
-{{--            @endcan--}}
+            @endcan
+          @can('posts.adminaccount',Auth::guard('admin')->user())
             <li class=""><a href="{{ route('admin.index') }}"><i class="fa fa-circle-o"></i>Account Admin</a></li>
+          @endcan
+          @can('posts.role', Auth::guard('admin')->user())
             <li class=""><a href="{{ route('role.index') }}"><i class="fa fa-circle-o"></i> Roles</a></li>
+          @endcan
+          @can('posts.permission', Auth::guard('admin')->user())
             <li class=""><a href="{{ route('permission.index') }}"><i class="fa fa-circle-o"></i> Permissions</a></li>
+          @endcan
         </li>
         
         
